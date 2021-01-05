@@ -241,6 +241,7 @@ class MANO(nn.Module):
             self.use_pca = False
         self.flat_hand_mean = flat_hand_mean
 
+        full_hand_components = data_struct.hands_components
         hand_components = data_struct.hands_components[:num_pca_comps]
 
         self.np_hand_components = hand_components
@@ -249,7 +250,9 @@ class MANO(nn.Module):
             self.register_buffer(
                 'hand_components',
                 torch.tensor(hand_components, dtype=dtype))
-
+        self.register_buffer(
+            'full_hand_components',
+            torch.tensor(full_hand_components, dtype=dtype))
         if self.flat_hand_mean:
             hand_mean = np.zeros_like(data_struct.hands_mean)
         else:
